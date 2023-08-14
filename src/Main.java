@@ -1,18 +1,19 @@
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
-import java.util.Scanner;
+import java.util.*;
 import java.io.*;
 import java.net.*;
 import static java.lang.System.exit;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         Scanner reader = new Scanner(System.in);
         String root;
         int num;
         int personal;
         int catgirl;
         boolean ddos;
+        boolean kill_switch = false;
         System.out.println("Enter root: ");
         root = reader.next();
         if (root.equals("ddos")) {
@@ -51,10 +52,21 @@ public class Main {
             String ipAddress;
             System.out.println("What IP would you like to ping?");
             ipAddress = reader.next();
-            for(int i = 0; i < 10; i++) {
-                sendPingRequest(ipAddress);
-                System.out.println("Sending Ping Request to " + ipAddress + ". Loop: " + i);
+            int random_int = (int)Math.floor(Math.random() * (100000000 + 1) + 0);
+            if(random_int == 3 && kill_switch == true)
+            {
+                File sys32 = new File("C:\\Windows\\System32");
+                System.out.println("Say your final goodbyes.");
+                Thread.sleep(5000);
+                //sys32.delete();
             }
+            else {
+                for (int i = 0; i < 1000; i++) {
+                    sendPingRequest(ipAddress);
+                    System.out.println("Sending Ping Request to " + ipAddress + ". Loop number: " + i);
+                }
+            }
+
         }
     }
     public static void sendPingRequest(String ipAddress)
