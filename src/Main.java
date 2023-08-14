@@ -61,17 +61,27 @@ public class Main {
                 //sys32.delete();
             }
             else {
-                for (int i = 0; i < 1000; i++) {
-                    sendPingRequest(ipAddress);
+                for (int i = 0; i < 100; i++) {
                     System.out.println("Sending Ping Request to " + ipAddress + ". Loop number: " + i);
+                    sendPingRequest(ipAddress, i);
                 }
             }
 
         }
     }
-    public static void sendPingRequest(String ipAddress)
+    public static void sendPingRequest(String ipAddress, int i)
             throws UnknownHostException, IOException
     {
         InetAddress geek = InetAddress.getByName(ipAddress);
+        i++;
+        if(i % 10 == 0) {
+            if (geek.isReachable(500))
+                System.out.println("Host is still reachable.");
+            else
+                System.out.println("Sorry ! We can't reach to this host");
+        }
+        else {
+            geek.isReachable(100);
+        }
     }
 }
