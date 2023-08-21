@@ -117,6 +117,7 @@ public class Main {
             try {
             if (!variable1Field.getText().isEmpty() && !variable2Field.getText().isEmpty() && !variable3Field.getText().isEmpty() && selectedOption.equals("Spanish")) {
                 selectedValue = spanishConjugation(Integer.parseInt(variable2Field.getText()),Integer.parseInt(variable3Field.getText()),variable1Field.getText());
+                System.out.println("a");
             } else if (!variable1Field.getText().isEmpty() && !variable2Field.getText().isEmpty() && !variable3Field.getText().isEmpty() && selectedOption.equals("French")) {
                 selectedValue = frenchConjugation(Integer.parseInt(variable2Field.getText()),Integer.parseInt(variable3Field.getText()),variable1Field.getText());
             } else {
@@ -125,7 +126,7 @@ public class Main {
             } catch (Exception ex)
             {
                 resultLabel.setText("An error occurred: " + ex.getMessage() + "; try again.");
-            }
+            };
             resultLabel.setText("Selected variable: " + selectedValue);
         }
     }
@@ -141,13 +142,38 @@ public class Main {
         } else {
             catgirl = 0;
         }
-        root = root.substring(0, root.length() - 2);
-        if (num > 2) {
-            num = 2;
-        }
         String[][][] ED = {{{"o", "as", "a"}, {"amos", "ais", "an"}}, {{"o", "es", "e"}, {"emos", "eis", "en"}}, {{"o", "es", "e"}, {"imos", "is", "en"}}};
-        root = root + ED[catgirl - 1][num - 1][personal - 1];
-        System.out.println("spn conj out: " + root + ".");
+        // {{"ser"}}, {{"soy", "eres", "es"}, {"somos", "sois", "son"}} example for irreg format
+        String[][][] IrregVerbs = {{{"ser"}}, {{"soy", "eres", "es"}, {"somos", "sois", "son"}}};
+        String tester;
+        boolean i = false;
+        int b = 0;
+        for(int k = 0; k < IrregVerbs.length/2; k++)
+        {
+            String s = IrregVerbs[k*2][0][0];
+
+            if (root.equals(s))
+            {
+                i = true;
+                b=k;
+            }
+        }
+        if(i)
+        {
+            if (num > 2) {
+                num = 2;
+            }
+            root = IrregVerbs[b+1][num - 1][personal - 1];
+            System.out.println("spn IRRG conj out: " + root + ".");
+        }
+        else {
+            root = root.substring(0, root.length() - 2);
+            if (num > 2) {
+                num = 2;
+            }
+            root = root + ED[catgirl - 1][num - 1][personal - 1];
+            System.out.println("spn conj out: " + root + ".");
+        }
         return root;
     }
     public static String frenchConjugation(int personal, int num, String root) {
