@@ -1,16 +1,22 @@
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
-import java.util.*;
-import java.io.*;
-import java.net.*;
-import javax.swing.JFrame;
+
+import jdk.jshell.JShell;
+
+import javax.script.ScriptException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws IOException, InterruptedException, ScriptException {
         Scanner reader = new Scanner(System.in);
         String root;
         int area;
@@ -19,23 +25,26 @@ public class Main {
         root = reader.next();
         if (root.equals("ddos")) {
             area = 1;
+        } else if (root.equals("calc")) {
+            area = 3;
         } else {
             area = 2;
         }
-        if(area == 1)
-        {
+        if (area == 1) {
             String ipAddress;
             System.out.println("What IP would you like to ping?");
             ipAddress = reader.next();
-                for (int i = 0; i < 100; i++) {
-                    System.out.println("Sending Ping Request to " + ipAddress + ". Loop number: " + i);
-                    sendPingRequest(ipAddress, i);
-                }
+            for (int i = 0; i < 100; i++) {
+                System.out.println("Sending Ping Request to " + ipAddress + ". Loop number: " + i);
+                sendPingRequest(ipAddress, i);
+            }
 
 
         }
-        if(area == 2)
-        {
+        if (area == 3) {
+            calculatorio();
+        }
+        if (area == 2) {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
@@ -44,21 +53,21 @@ public class Main {
             });
         }
     }
+
     public static void sendPingRequest(String ipAddress, int i)
-            throws UnknownHostException, IOException
-    {
+            throws UnknownHostException, IOException {
         InetAddress geek = InetAddress.getByName(ipAddress);
         i++;
-        if(i % 10 == 0) {
+        if (i % 10 == 0) {
             if (geek.isReachable(500))
                 System.out.println("Host is still reachable.");
             else
                 System.out.println("Sorry ! We can't reach to this host");
-        }
-        else {
+        } else {
             geek.isReachable(100);
         }
     }
+
     public static class VariableDisplaySwing {
 
         private JTextField variable1Field, variable2Field, variable3Field;
@@ -115,21 +124,22 @@ public class Main {
             }
 
             try {
-            if (!variable1Field.getText().isEmpty() && !variable2Field.getText().isEmpty() && !variable3Field.getText().isEmpty() && selectedOption.equals("Spanish")) {
-                selectedValue = spanishConjugation(Integer.parseInt(variable2Field.getText()),Integer.parseInt(variable3Field.getText()),variable1Field.getText());
-                System.out.println("a");
-            } else if (!variable1Field.getText().isEmpty() && !variable2Field.getText().isEmpty() && !variable3Field.getText().isEmpty() && selectedOption.equals("French")) {
-                selectedValue = frenchConjugation(Integer.parseInt(variable2Field.getText()),Integer.parseInt(variable3Field.getText()),variable1Field.getText());
-            } else {
-                selectedValue = "Fill in all fields!";
-            }
-            } catch (Exception ex)
-            {
+                if (!variable1Field.getText().isEmpty() && !variable2Field.getText().isEmpty() && !variable3Field.getText().isEmpty() && selectedOption.equals("Spanish")) {
+                    selectedValue = spanishConjugation(Integer.parseInt(variable2Field.getText()), Integer.parseInt(variable3Field.getText()), variable1Field.getText());
+                    System.out.println("a");
+                } else if (!variable1Field.getText().isEmpty() && !variable2Field.getText().isEmpty() && !variable3Field.getText().isEmpty() && selectedOption.equals("French")) {
+                    selectedValue = frenchConjugation(Integer.parseInt(variable2Field.getText()), Integer.parseInt(variable3Field.getText()), variable1Field.getText());
+                } else {
+                    selectedValue = "Fill in all fields!";
+                }
+            } catch (Exception ex) {
                 resultLabel.setText("An error occurred: " + ex.getMessage() + "; try again.");
-            };
+            }
+            ;
             resultLabel.setText("Selected variable: " + selectedValue);
         }
     }
+
     public static String spanishConjugation(int personal, int num, String root) {
         int catgirl;
         Scanner reader = new Scanner(System.in);
@@ -148,25 +158,21 @@ public class Main {
         String tester;
         boolean i = false;
         int b = 0;
-        for(int k = 0; k < IrregVerbs.length/2; k++)
-        {
-            String s = IrregVerbs[k*2][0][0];
+        for (int k = 0; k < IrregVerbs.length / 2; k++) {
+            String s = IrregVerbs[k * 2][0][0];
 
-            if (root.equals(s))
-            {
+            if (root.equals(s)) {
                 i = true;
-                b=k;
+                b = k;
             }
         }
-        if(i)
-        {
+        if (i) {
             if (num > 2) {
                 num = 2;
             }
-            root = IrregVerbs[b+1][num - 1][personal - 1];
+            root = IrregVerbs[b + 1][num - 1][personal - 1];
             System.out.println("spn IRRG conj out: " + root + ".");
-        }
-        else {
+        } else {
             root = root.substring(0, root.length() - 2);
             if (num > 2) {
                 num = 2;
@@ -176,6 +182,7 @@ public class Main {
         }
         return root;
     }
+
     public static String frenchConjugation(int personal, int num, String root) {
         int catgirl;
         Scanner reader = new Scanner(System.in);
@@ -195,5 +202,22 @@ public class Main {
         String[][][] ED = {{{"e", "es", "e"}, {"ons", "ez", "ent"}}, {{"is", "is", "it"}, {"issons", "issez", "issent"}}, {{"s", "s", ""}, {"ons", "ez", "ent"}}};
         root = root + ED[catgirl - 1][num - 1][personal - 1];
         return root;
+    }
+
+    public static void calculatorio() throws ScriptException, IOException {
+        try (JShell js = JShell.create(); BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+
+            js.onSnippetEvent(snip -> {
+                if (snip.status() == jdk.jshell.Snippet.Status.VALID) {
+                    System.out.println("➜ " + snip.value());
+                }
+            });
+
+            System.out.print("> ");
+            for (String line = br.readLine(); line != null; line = br.readLine()) {
+                js.eval(js.sourceCodeAnalysis().analyzeCompletion(line).source());
+                System.out.print("> ");
+            }
+        }
     }
 }
