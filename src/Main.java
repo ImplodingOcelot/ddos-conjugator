@@ -30,6 +30,8 @@ public class Main {
             area = 1;
         } else if (root.equals("calc")) {
             area = 3;
+        } else if (root.equals("randint1000")) {
+            area = 4;
         } else {
             area = 2;
         }
@@ -54,6 +56,11 @@ public class Main {
                     new VariableDisplaySwing();
                 }
             });
+        }
+        if (area == 4) {
+            randint();
+            randint();
+            randint();
         }
     }
 
@@ -286,6 +293,10 @@ public class Main {
                 System.out.print("> ");
             }
         }
+    }
+
+    public static void randint() {
+        System.out.println(new Random().nextInt(1, 1000));
     }
 
 }
