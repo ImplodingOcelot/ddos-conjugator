@@ -12,7 +12,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.UnknownHostException;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -88,7 +91,7 @@ public class Main {
             variable3Field = new JTextField();
             displayButton = new JButton("Display");
             resultLabel = new JLabel();
-            dropdown = new JComboBox<>(new String[]{"Spanish", "French"});
+            dropdown = new JComboBox<>(new String[]{"Spanish", "French", "Italian"});
 
             panel.add(new JLabel("Select Option:"));
             panel.add(dropdown);
@@ -129,6 +132,8 @@ public class Main {
                     System.out.println("a");
                 } else if (!variable1Field.getText().isEmpty() && !variable2Field.getText().isEmpty() && !variable3Field.getText().isEmpty() && selectedOption.equals("French")) {
                     selectedValue = frenchConjugation(Integer.parseInt(variable2Field.getText()), Integer.parseInt(variable3Field.getText()), variable1Field.getText());
+                } else if (!variable1Field.getText().isEmpty() && !variable2Field.getText().isEmpty() && !variable3Field.getText().isEmpty() && selectedOption.equals("Italian")) {
+                    selectedValue = pizzaConjugation(Integer.parseInt(variable2Field.getText()), Integer.parseInt(variable3Field.getText()), variable1Field.getText());
                 } else {
                     selectedValue = "Fill in all fields!";
                 }
@@ -204,6 +209,68 @@ public class Main {
         return root;
     }
 
+    public static String pizzaConjugation(int personal, int num, String root) throws IOException, URISyntaxException {
+        int catgirl;
+        Scanner reader = new Scanner(System.in);
+        if (root.equals("pizza")) {
+            if (Desktop.isDesktopSupported()) {
+                int randomized = new Random().nextInt(1, 10);
+                Desktop desktop = Desktop.getDesktop();
+                URI uri = URI.create("about:blank");
+                switch (randomized) {
+                    case 1:
+                        uri = new URI("https://www.lilriccispizza.com//");
+                        break;
+                    case 2:
+                        uri = new URI("https://parryspizza.com/locations/");
+                        break;
+                    case 3:
+                        uri = new URI("https://littlecaesars.com/");
+                        break;
+                    case 4:
+                        uri = new URI("https://www.papajohns.com/");
+                        break;
+                    case 5:
+                        uri = new URI("https://blackjackpizza.com/blackjack-locations/");
+                        break;
+                    case 6:
+                        uri = new URI("https://www.papamurphys.com/");
+                        break;
+                    case 7:
+                        uri = new URI("https://modpizza.com/menu/");
+                        break;
+                    case 8:
+                        uri = new URI("https://www.colonnaspizza.com/");
+                        break;
+                    case 9:
+                        uri = new URI("https://www.dominos.com/en/");
+                        break;
+                    case 10:
+                        uri = new URI("https://www.miciitalian.com/");
+                        break;
+                }
+                desktop.browse(uri);
+            }
+            return "Mamma mia dats allota PIZZA!";
+        }
+        if (root.endsWith("are")) {
+            catgirl = 1;
+        } else if (root.endsWith("ere")) {
+            catgirl = 2;
+        } else if (root.endsWith("ire")) {
+            catgirl = 3;
+        } else {
+            catgirl = 0;
+        }
+        root = root.substring(0, root.length() - 3);
+        if (num > 2) {
+            num = 2;
+        }
+        String[][][] ED = {{{"o", "i", "a"}, {"iamo", "ate", "ano"}}, {{"o", "i", "e"}, {"iamo", "ete", "ono"}}, {{"o", "i", "e"}, {"iamo", "ite", "ono"}}};
+        root = root + ED[catgirl - 1][num - 1][personal - 1];
+        return root;
+    }
+
     public static void calculatorio() throws ScriptException, IOException {
         try (JShell js = JShell.create(); BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
 
@@ -220,4 +287,5 @@ public class Main {
             }
         }
     }
+
 }
