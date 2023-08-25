@@ -27,15 +27,6 @@ public class Main {
         System.out.println("Enter program selection: ");
         root = reader.next();
         if (root.equals("ddos")) {
-            area = 1;
-        } else if (root.equals("calc")) {
-            area = 3;
-        } else if (root.equals("randint1000")) {
-            area = 4;
-        } else {
-            area = 2;
-        }
-        if (area == 1) {
             String ipAddress;
             System.out.println("What IP would you like to ping?");
             ipAddress = reader.next();
@@ -43,24 +34,19 @@ public class Main {
                 System.out.println("Sending Ping Request to " + ipAddress + ". Loop number: " + i);
                 sendPingRequest(ipAddress, i);
             }
-
-
-        }
-        if (area == 3) {
+        } else if (root.equals("calc")) {
             calculatorio();
-        }
-        if (area == 2) {
+        } else if (root.equals("randint1000")) {
+            randint();
+            randint();
+            randint();
+        } else {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
                     new VariableDisplaySwing();
                 }
             });
-        }
-        if (area == 4) {
-            randint();
-            randint();
-            randint();
         }
     }
 
@@ -197,6 +183,7 @@ public class Main {
 
     public static String frenchConjugation(int personal, int num, String root) {
         int catgirl;
+
         Scanner reader = new Scanner(System.in);
         if (root.endsWith("er")) {
             catgirl = 1;
