@@ -1,6 +1,3 @@
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
-
 import jdk.jshell.JShell;
 
 import javax.script.ScriptException;
@@ -21,6 +18,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException, ScriptException {
         Scanner reader = new Scanner(System.in);
+        killMeIWantToDie fuck = new killMeIWantToDie();
         String root;
         int area;
         boolean kill_switch = false;
@@ -31,15 +29,30 @@ public class Main {
             System.out.println("What IP would you like to ping?");
             ipAddress = reader.next();
             for (int i = 0; i < 100; i++) {
-                System.out.println("Sending Ping Request to " + ipAddress + ". Loop number: " + i);
+                System.out.println("Sending Ping Request to " + ipAddress + "; Loop number: " + i);
                 sendPingRequest(ipAddress, i);
             }
         } else if (root.equals("calc")) {
             calculatorio();
         } else if (root.equals("randint1000")) {
-            randint();
-            randint();
-            randint();
+            fuck.randint();
+            fuck.randint();
+            fuck.randint();
+        } else if (root.equals("max3")) {
+            int a, b, c;
+            System.out.println("Type in the 3 numbers you want to find the max of:");
+            a = reader.nextInt();
+            b = reader.nextInt();
+            c = reader.nextInt();
+            System.out.println("The max number is: " + fuck.FUCKMEAHHHHHHHHHHHHHHHHHHHHHHH(a, b, c));
+        } else if (root.equals("pone")) {
+            System.out.println("What phone number would you like added up? Use the format XXX-XXX-XXXX");
+            String bob = reader.next();
+            System.out.println("The result is: " + (int) (Integer.parseInt(bob.substring(0, 3)) + Integer.parseInt(bob.substring(4, 7)) + Integer.parseInt(bob.substring(8, 12))));
+        } else if (root.equals("piglatin")) {
+            System.out.println("What word would you like to translate?");
+            String bob = reader.next();
+            System.out.println("Your result is: " + bob.substring(bob.length() - 1) + bob.substring(1, bob.length() - 1) + bob.substring(0, 1));
         } else {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
@@ -282,8 +295,15 @@ public class Main {
         }
     }
 
+
+}
+
+class killMeIWantToDie {
+    public int FUCKMEAHHHHHHHHHHHHHHHHHHHHHHH(int a, int b, int c) {
+        return Math.max(a, Math.max(b, c));
+    }
+
     public static void randint() {
         System.out.println(new Random().nextInt(1, 1000));
     }
-
 }
