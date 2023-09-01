@@ -35,9 +35,9 @@ public class Main {
         } else if (root.equals("calc")) {
             calculatorio();
         } else if (root.equals("randint1000")) {
-            fuck.randint();
-            fuck.randint();
-            fuck.randint();
+            killMeIWantToDie.randint();
+            killMeIWantToDie.randint();
+            killMeIWantToDie.randint();
         } else if (root.equals("max3")) {
             int a, b, c;
             System.out.println("Type in the 3 numbers you want to find the max of:");
