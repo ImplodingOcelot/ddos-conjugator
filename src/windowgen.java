@@ -52,15 +52,27 @@ public class windowgen {
             JFrame frame = new JFrame("Madlibs");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(600, 500);
+
             JPanel panel = new JPanel();
             panel.setLayout(new GridLayout(5, 1, 10, 10));
+
             variable1Field = new JTextField();
+            resultLabel = new JLabel();
+            displayButton = new JButton("Display");
             // rows
             panel.add(new JLabel("Type the story you want to. Replace all adjectives, nouns, and verbs with [adj], [noun], [verb] respectively."));
             panel.add(variable1Field);
-            displayButton = new JButton("Fill In");
-            panel.add(new JLabel("Root:"));
+            panel.add(displayButton);
+            panel.add(new JLabel("Result:"));
             panel.add(resultLabel);
+            displayButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    madLibFiller();
+                }
+            });
+            frame.add(panel);
+            frame.setVisible(true);
         }
         displayButton.addActionListener(new ActionListener() {
             @Override
@@ -100,27 +112,32 @@ public class windowgen {
     }
 
     private void madLibFiller() {
-        String[] nouns = {"a"};
-        String[] verbs = {"a"};
-        String[] adjectives = {"a"};
-        String[] wordsSplitUp = variable1Field.toString().split(" ");
-        String finalArea = "";
+        String[] nouns = {"a", "b"};
+        String[] verbs = {"c", "d"};
+        String[] adjectives = {"e", "f"};
+        String[] wordsSplitUp = variable1Field.getText().split(" ");
+        StringBuilder finalArea = new StringBuilder();
+        int random;
         for (int i = 0; i < wordsSplitUp.length; i++) {
             switch (wordsSplitUp[i]) {
                 case "[adj]" -> {
-                    finalArea = finalArea + adjectives[new Random().nextInt(1, adjectives.length)];
+                    finalArea.append(adjectives[new Random().nextInt(0, adjectives.length)]);
                 }
                 case "[noun]" -> {
-                    finalArea = finalArea + (nouns[new Random().nextInt(1, adjectives.length)]);
+                    finalArea.append(nouns[new Random().nextInt(0, nouns.length)]);
                 }
                 case "[verb]" -> {
-                    finalArea = finalArea + (verbs[new Random().nextInt(1, adjectives.length)]);
+                    finalArea.append(verbs[new Random().nextInt(0, verbs.length)]);
                 }
                 default -> {
-                    finalArea = finalArea + (wordsSplitUp[i]);
+                    finalArea.append(wordsSplitUp[i]);
                 }
             }
+            finalArea.append(" ");
         }
-        resultLabel.setText(finalArea);
+        for (int i = 0; i < wordsSplitUp.length; i++) {
+            System.out.println(wordsSplitUp[i]);
+        }
+        resultLabel.setText(finalArea.toString());
     }
 }

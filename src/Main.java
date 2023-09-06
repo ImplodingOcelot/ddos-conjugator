@@ -48,11 +48,18 @@ public class Main {
             System.out.println("What word would you like to translate?");
             String bob = reader.next();
             System.out.println("Your result is: " + bob.substring(bob.length() - 1) + bob.substring(1, bob.length() - 1) + bob.substring(0, 1));
-        } else {
+        } else if (root.equals("conj")) {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
                     new windowgen(1);
+                }
+            });
+        } else if (root.equals("madlib")) {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new windowgen(2);
                 }
             });
         }
