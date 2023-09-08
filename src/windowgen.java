@@ -148,16 +148,25 @@ public class windowgen {
         // [article] [adj] [noun] [verb] [to] [article] [adj] [verb].
         // [article] [adj] [noun] [verb].
         // [article] [noun] [verb] alot.
+        // [noun].firstLetterCaps, the destroyer of worlds, commands you: become a [adjective] [noun]
+        // The primary directive of this mission is simple. You must [verb] a [noun], [adjtively]ly.
         String[] article = {"A ", "The "};
         String[] nouns = {"cow ", "barn ", "you ", "Mr. Gardener ", "catgirl ", "tgirl ", "femboy ", "madLibs ", "shop ", "circus ", "folder ", "Elgritch, the leader of the Underworld ", "your dad "};
-        String[] verbs = {"ran ", "climbed ", "thought ", "felt ", "conjugated ", "coded ", "wasted ", "typed ", "fucked ", "transitioned "};
+        String[] verbs = {"ran ", "climbed ", "thought ", "feel ", "conjugated ", "coded ", "wasted ", "typed ", "fucked ", "transitioned "};
         String[] adjectives = {"fatass ", "fucked ", "smart ", "tall ", "short ", "large ", "fast ", "motherly ", "stupid ", "fucked "};
-        int random = (int) (Math.random() * 3 + 1); // will return either 1, 2, 3
+        int random = (int) (Math.random() * 5 + 1); // will return either 1, 2, 3
         if (random == 2) {
             return article[new Random().nextInt(0, article.length)] + nouns[new Random().nextInt(0, nouns.length)] + verbs[new Random().nextInt(0, verbs.length)] + "to " + article[new Random().nextInt(0, article.length)].toLowerCase() + adjectives[new Random().nextInt(0, adjectives.length)] + nouns[new Random().nextInt(0, nouns.length)] + ".";
-        }
-        if (random == 1) {
+        } else if (random == 1) {
             return article[new Random().nextInt(0, article.length)] + nouns[new Random().nextInt(0, nouns.length)] + verbs[new Random().nextInt(0, verbs.length)] + "alot.";
+        } else if (random == 4) {
+            String namething = nouns[new Random().nextInt(0, nouns.length)];
+            String cap = namething.substring(0, 1).toUpperCase() + namething.substring(1, namething.length() - 1);
+            return cap + ", the destroyer of worlds, commands you: become a " + adjectives[new Random().nextInt(0, adjectives.length)] + nouns[new Random().nextInt(0, nouns.length)];
+        } else if (random == 5) {
+            String namething = adjectives[new Random().nextInt(0, adjectives.length)];
+            namething = namething.substring(0, namething.length() - 1);
+            return "The primary directive of this mission is simple. You must " + verbs[new Random().nextInt(0, verbs.length)] + article[new Random().nextInt(0, article.length)].toLowerCase() + nouns[new Random().nextInt(0, nouns.length)] + namething + "ly.";
         } else {
             int random2 = new Random().nextInt(0, verbs.length);
             return article[new Random().nextInt(0, article.length)] + nouns[new Random().nextInt(0, nouns.length)] + verbs[random2].substring(0, verbs[random2].length() - 1) + ".";
