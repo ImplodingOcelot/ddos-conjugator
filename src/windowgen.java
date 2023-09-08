@@ -145,17 +145,22 @@ public class windowgen {
     }
 
     private String SentenceFiller() {
-        // [article] [adj] [noun] [verb] [to] [article] [adj] [verb]
-        // [article] [adj] [noun] [verb]
+        // [article] [adj] [noun] [verb] [to] [article] [adj] [verb].
+        // [article] [adj] [noun] [verb].
+        // [article] [noun] [verb] alot.
         String[] article = {"A ", "The "};
         String[] nouns = {"cow ", "barn ", "you ", "Mr. Gardener ", "catgirl ", "tgirl ", "femboy ", "madLibs ", "shop ", "circus ", "folder ", "Elgritch, the leader of the Underworld ", "your dad "};
         String[] verbs = {"ran ", "climbed ", "thought ", "felt ", "conjugated ", "coded ", "wasted ", "typed ", "fucked ", "transitioned "};
         String[] adjectives = {"fatass ", "fucked ", "smart ", "tall ", "short ", "large ", "fast ", "motherly ", "stupid ", "fucked "};
-        int random = (Math.random() <= 0.5) ? 1 : 2;
-        if (random == 1) {
+        int random = (int) (Math.random() * 3 + 1); // will return either 1, 2, 3
+        if (random == 2) {
             return article[new Random().nextInt(0, article.length)] + nouns[new Random().nextInt(0, nouns.length)] + verbs[new Random().nextInt(0, verbs.length)] + "to " + article[new Random().nextInt(0, article.length)].toLowerCase() + adjectives[new Random().nextInt(0, adjectives.length)] + nouns[new Random().nextInt(0, nouns.length)] + ".";
+        }
+        if (random == 1) {
+            return article[new Random().nextInt(0, article.length)] + nouns[new Random().nextInt(0, nouns.length)] + verbs[new Random().nextInt(0, verbs.length)] + "alot.";
         } else {
-            return article[new Random().nextInt(0, article.length)] + nouns[new Random().nextInt(0, nouns.length)] + verbs[new Random().nextInt(0, verbs.length)];
+            int random2 = new Random().nextInt(0, verbs.length);
+            return article[new Random().nextInt(0, article.length)] + nouns[new Random().nextInt(0, nouns.length)] + verbs[random2].substring(0, verbs[random2].length() - 1) + ".";
         }
     }
 }
