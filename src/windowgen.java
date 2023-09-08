@@ -9,6 +9,7 @@ public class windowgen {
 
     private JTextField variable1Field, variable2Field, variable3Field;
     private JButton displayButton;
+    private JButton displayButton2;
     private JLabel resultLabel;
     private JComboBox<String> dropdown;
 
@@ -59,10 +60,12 @@ public class windowgen {
             variable1Field = new JTextField();
             resultLabel = new JLabel();
             displayButton = new JButton("Display");
+            displayButton2 = new JButton("Generate Random Sentence");
             // rows
-            panel.add(new JLabel("Type the story you want to. Replace all adjectives, nouns, and verbs with [adj], [noun], [verb] respectively."));
+            panel.add(new JLabel("Type the story you want to. Replace all adjectives, nouns, and verbs with [a], [n], [v] respectively."));
             panel.add(variable1Field);
             panel.add(displayButton);
+            panel.add(displayButton2);
             panel.add(new JLabel("Result:"));
             panel.add(resultLabel);
             displayButton.addActionListener(new ActionListener() {
@@ -71,15 +74,15 @@ public class windowgen {
                     madLibFiller();
                 }
             });
+            displayButton2.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    resultLabel.setText(SentenceFiller());
+                }
+            });
             frame.add(panel);
             frame.setVisible(true);
         }
-        displayButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
     }
 
     private void displaySelectedVariable() {
@@ -112,21 +115,21 @@ public class windowgen {
     }
 
     private void madLibFiller() {
-        String[] nouns = {"a", "b"};
-        String[] verbs = {"c", "d"};
-        String[] adjectives = {"e", "f"};
+        String[] nouns = {"cow", "barn", "you", "Mr. Gardener", "catgirl", "tgirl", "femboy", "madLibs", "shop", "circus", "folder", "Elgritch, the leader of the Underworld", "your dad"};
+        String[] verbs = {"ran", "climbed", "thought", "felt", "conjugated", "coded", "wasted", "typed", "fucked", "transitioned"};
+        String[] adjectives = {"fatass", "fucked", "smart", "tall", "short", "large", "fast", "motherly", "stupid", "fucked"};
         String[] wordsSplitUp = variable1Field.getText().split(" ");
         StringBuilder finalArea = new StringBuilder();
         int random;
         for (int i = 0; i < wordsSplitUp.length; i++) {
             switch (wordsSplitUp[i]) {
-                case "[adj]" -> {
+                case "[a]" -> {
                     finalArea.append(adjectives[new Random().nextInt(0, adjectives.length)]);
                 }
-                case "[noun]" -> {
+                case "[n]" -> {
                     finalArea.append(nouns[new Random().nextInt(0, nouns.length)]);
                 }
-                case "[verb]" -> {
+                case "[v]" -> {
                     finalArea.append(verbs[new Random().nextInt(0, verbs.length)]);
                 }
                 default -> {
@@ -139,5 +142,20 @@ public class windowgen {
             System.out.println(wordsSplitUp[i]);
         }
         resultLabel.setText(finalArea.toString());
+    }
+
+    private String SentenceFiller() {
+        // [article] [adj] [noun] [verb] [to] [article] [adj] [verb]
+        // [article] [adj] [noun] [verb]
+        String[] article = {"A ", "The "};
+        String[] nouns = {"cow ", "barn ", "you ", "Mr. Gardener ", "catgirl ", "tgirl ", "femboy ", "madLibs ", "shop ", "circus ", "folder ", "Elgritch, the leader of the Underworld ", "your dad "};
+        String[] verbs = {"ran ", "climbed ", "thought ", "felt ", "conjugated ", "coded ", "wasted ", "typed ", "fucked ", "transitioned "};
+        String[] adjectives = {"fatass ", "fucked ", "smart ", "tall ", "short ", "large ", "fast ", "motherly ", "stupid ", "fucked "};
+        int random = (Math.random() <= 0.5) ? 1 : 2;
+        if (random == 1) {
+            return article[new Random().nextInt(0, article.length)] + nouns[new Random().nextInt(0, nouns.length)] + verbs[new Random().nextInt(0, verbs.length)] + "to " + article[new Random().nextInt(0, article.length)].toLowerCase() + adjectives[new Random().nextInt(0, adjectives.length)] + nouns[new Random().nextInt(0, nouns.length)] + ".";
+        } else {
+            return article[new Random().nextInt(0, article.length)] + nouns[new Random().nextInt(0, nouns.length)] + verbs[new Random().nextInt(0, verbs.length)];
+        }
     }
 }
