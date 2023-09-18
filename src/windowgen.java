@@ -85,20 +85,47 @@ public class windowgen {
         } else if (windowchoice == 3) {
             JFrame frame = new JFrame("Inspirational Quote Generator");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(600, 500);
+            frame.setSize(1000, 1000);
             displayButton = new JButton("New quote");
             JPanel panel = new JPanel();
-            panel.setLayout(new GridLayout(5, 1, 10, 10));
+            panel.setLayout(new GridLayout(3, 2, 10, 10));
             JLabel authorDisc = new JLabel();
             JLabel Quote = new JLabel();
             JLabel QuoteBy = new JLabel();
+            JLabel title = new JLabel("Quote Generator");
+            JLabel title2 = new JLabel("Author Description");
+            imagegen catgirl = new imagegen();
+
+            //title.setPreferredSize(new Dimension(500, 100));
+            //QuoteBy.setPreferredSize(new Dimension(500, 100));
+            //authorDisc.setPreferredSize(new Dimension(500, 200));
+//            Quote.setPreferredSize(new Dimension(500, 600));
+//            title2.setPreferredSize(new Dimension(500, 200));
+
 
             inspirationAPI inspirationAPI = new inspirationAPI();
             inspirationAPI.inspirationAPImain();
             authorDisc.setText(inspirationAPI.getAuthorDisc());
             QuoteBy.setText(inspirationAPI.getQuoteBy());
             Quote.setText(inspirationAPI.getQuote());
+            catgirl.imagegenmain("Image of " + inspirationAPI.getQuoteBy());
+            ImageIcon image = new ImageIcon("C:\\Users\\ottzj\\Documents\\image.jpg");
 
+            JLabel imageLabel = new JLabel(image);
+
+            imageLabel.setSize(new Dimension(500, 600));
+            title.setSize(new Dimension(500, 100));
+            QuoteBy.setSize(new Dimension(500, 100));
+            authorDisc.setSize(new Dimension(500, 200));
+            Quote.setSize(new Dimension(500, 600));
+            title2.setSize(new Dimension(500, 200));
+
+            panel.add(title);
+            panel.add(QuoteBy);
+            panel.add(imageLabel);
+            panel.add(Quote);
+            panel.add(title2);
+            panel.add(authorDisc);
             frame.add(panel);
             frame.setVisible(true);
         }

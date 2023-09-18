@@ -79,12 +79,22 @@ public class Main {
                     }
                 }
             });
+        } else if (root.equals("quote")) {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        new windowgen(3);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
         } else if (root.equals("test")) {
-            inspirationAPI wowza = new inspirationAPI();
-            wowza.inspirationAPImain();
-        } else if (root.equals("test2")) {
             imagegen bob = new imagegen();
-            bob.imagegenmain();
+            bob.imagegenmain("Carl Sagan");
         }
     }
 
