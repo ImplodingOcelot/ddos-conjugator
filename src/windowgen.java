@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Scanner;
+import java.io.IOException;
 
 public class windowgen {
 
@@ -12,7 +12,7 @@ public class windowgen {
     private JLabel resultLabel;
     private JComboBox<String> dropdown;
 
-    public windowgen(int windowchoice) {
+    public windowgen(int windowchoice) throws IOException, InterruptedException {
         if (windowchoice == 1) {
             JFrame frame = new JFrame("Variable Display Window");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,7 +42,7 @@ public class windowgen {
             displayButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    displaySelectedVariable();
+                    conjugators conjugators = new conjugators(variable1Field, variable2Field, variable3Field, resultLabel, dropdown);
                 }
             });
 
@@ -82,35 +82,26 @@ public class windowgen {
             });
             frame.add(panel);
             frame.setVisible(true);
+        } else if (windowchoice == 3) {
+            JFrame frame = new JFrame("Inspirational Quote Generator");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(600, 500);
+            displayButton = new JButton("New quote");
+            JPanel panel = new JPanel();
+            panel.setLayout(new GridLayout(5, 1, 10, 10));
+            JLabel authorDisc = new JLabel();
+            JLabel Quote = new JLabel();
+            JLabel QuoteBy = new JLabel();
+
+            inspirationAPI inspirationAPI = new inspirationAPI();
+            inspirationAPI.inspirationAPImain();
+            authorDisc.setText(inspirationAPI.getAuthorDisc());
+            QuoteBy.setText(inspirationAPI.getQuoteBy());
+            Quote.setText(inspirationAPI.getQuote());
+
+            frame.add(panel);
+            frame.setVisible(true);
         }
     }
 
-    private void displaySelectedVariable() {
-        String selectedValue = "";
-        String selectedOption = (String) dropdown.getSelectedItem();
-        Scanner reader = new Scanner(System.in);
-        try {
-            int personal = Integer.parseInt(variable2Field.getText());
-            int num = Integer.parseInt(variable3Field.getText());
-        } catch (Exception ex) {
-            resultLabel.setText("An error occurred: " + ex.getMessage() + "; try again.");
-        }
-
-        try {
-            if (!variable1Field.getText().isEmpty() && !variable2Field.getText().isEmpty() && !variable3Field.getText().isEmpty() && selectedOption.equals("Spanish")) {
-                selectedValue = conjugators.spanishConjugation(Integer.parseInt(variable2Field.getText()), Integer.parseInt(variable3Field.getText()), variable1Field.getText());
-                System.out.println("a");
-            } else if (!variable1Field.getText().isEmpty() && !variable2Field.getText().isEmpty() && !variable3Field.getText().isEmpty() && selectedOption.equals("French")) {
-                selectedValue = conjugators.frenchConjugation(Integer.parseInt(variable2Field.getText()), Integer.parseInt(variable3Field.getText()), variable1Field.getText());
-            } else if (!variable1Field.getText().isEmpty() && !variable2Field.getText().isEmpty() && !variable3Field.getText().isEmpty() && selectedOption.equals("Italian")) {
-                selectedValue = conjugators.pizzaConjugation(Integer.parseInt(variable2Field.getText()), Integer.parseInt(variable3Field.getText()), variable1Field.getText());
-            } else {
-                selectedValue = "Fill in all fields!";
-            }
-        } catch (Exception ex) {
-            resultLabel.setText("An error occurred: " + ex.getMessage() + "; try again.");
-        }
-        ;
-        resultLabel.setText("Selected variable: " + selectedValue);
-    }
 }

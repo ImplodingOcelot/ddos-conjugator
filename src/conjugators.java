@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
@@ -6,6 +7,48 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class conjugators {
+    private JTextField variable1Field, variable2Field, variable3Field;
+    private JLabel resultLabel;
+    private JComboBox<String> dropdown;
+
+    public conjugators(JTextField variable1Field, JTextField variable2Field, JTextField variable3Field, JLabel resultLabel, JComboBox<String> dropdown) {
+        this.variable1Field = variable1Field;
+        this.variable2Field = variable2Field;
+        this.variable3Field = variable3Field;
+        this.resultLabel = resultLabel;
+        this.dropdown = dropdown;
+        displaySelectedVariable();
+    }
+
+    private void displaySelectedVariable() {
+        String selectedValue = "";
+        String selectedOption = (String) dropdown.getSelectedItem();
+        Scanner reader = new Scanner(System.in);
+        try {
+            int personal = Integer.parseInt(variable2Field.getText());
+            int num = Integer.parseInt(variable3Field.getText());
+        } catch (Exception ex) {
+            resultLabel.setText("An error occurred: " + ex.getMessage() + "; try again.");
+        }
+
+        try {
+            if (!variable1Field.getText().isEmpty() && !variable2Field.getText().isEmpty() && !variable3Field.getText().isEmpty() && selectedOption.equals("Spanish")) {
+                selectedValue = conjugators.spanishConjugation(Integer.parseInt(variable2Field.getText()), Integer.parseInt(variable3Field.getText()), variable1Field.getText());
+                System.out.println("a");
+            } else if (!variable1Field.getText().isEmpty() && !variable2Field.getText().isEmpty() && !variable3Field.getText().isEmpty() && selectedOption.equals("French")) {
+                selectedValue = conjugators.frenchConjugation(Integer.parseInt(variable2Field.getText()), Integer.parseInt(variable3Field.getText()), variable1Field.getText());
+            } else if (!variable1Field.getText().isEmpty() && !variable2Field.getText().isEmpty() && !variable3Field.getText().isEmpty() && selectedOption.equals("Italian")) {
+                selectedValue = conjugators.pizzaConjugation(Integer.parseInt(variable2Field.getText()), Integer.parseInt(variable3Field.getText()), variable1Field.getText());
+            } else {
+                selectedValue = "Fill in all fields!";
+            }
+        } catch (Exception ex) {
+            resultLabel.setText("An error occurred: " + ex.getMessage() + "; try again.");
+        }
+        ;
+        resultLabel.setText("Selected variable: " + selectedValue);
+    }
+
     public static String spanishConjugation(int personal, int num, String root) {
         int catgirl;
         Scanner reader = new Scanner(System.in);

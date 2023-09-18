@@ -57,16 +57,34 @@ public class Main {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    new windowgen(1);
+                    try {
+                        new windowgen(1);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             });
         } else if (root.equals("madlib")) {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    new windowgen(2);
+                    try {
+                        new windowgen(2);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             });
+        } else if (root.equals("test")) {
+            inspirationAPI wowza = new inspirationAPI();
+            wowza.inspirationAPImain();
+        } else if (root.equals("test2")) {
+            imagegen bob = new imagegen();
+            bob.imagegenmain();
         }
     }
 
@@ -113,41 +131,3 @@ class killMeIWantToDie {
         System.out.println(new Random().nextInt(1, 1000));
     }
 }
-
-/*
-class Scratch {
-    public static void main(String[] args) {
-
-    }
-}
-class Tweet {
-    String message;
-    int retweets;
-    int likes;
-
-    public void constructor(String message_, int likes_, int retweets_) {
-        this.message = message_;
-        this.likes = likes_;
-        this.retweets = retweets_;
-    }
-    public void addLike(int addLike) {
-        this.likes += addLike;
-    }
-    public void addRetweet(int addedRetweets) {
-        this.retweets += addedRetweets;
-    }
-    public boolean notLiked() {
-        return this.likes < 10;
-    }
-    public boolean kindaLiked() {
-        return this.likes < this.retweets;
-    }
-    public boolean isTrending() {
-        return this.likes + this.retweets > 75;
-    }
-    public String ToString()
-    {
-        return "Message: " + this.message + " Likes: " + this.likes + " Retweets: " + this.retweets;
-    }
-}
- */
