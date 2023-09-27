@@ -111,7 +111,7 @@ public class windowgen {
             title2.setEditable(false);
             title2.setLineWrap(true);
             title2.setOpaque(false);
-            title.setWrapStyleWord(true);
+            title2.setWrapStyleWord(true);
 
             imagegen catgirl = new imagegen();
 

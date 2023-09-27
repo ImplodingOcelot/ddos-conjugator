@@ -146,7 +146,7 @@ public class Main {
     }
 
     public static void longestStreak(String input) {
-        // find the longest streak of a letter in a string. for example, WAAAAAH has a max streak of 5 A's, and BOOOB has a max streak of 3 O's
+        // find the longest streak of a letter in a string. for example, WAAAAAH has a max streak of 5 A's, and COOOB has a max streak of 3 O's
         int max = 0;
         int count = 1;
         char maxChar = input.charAt(0);
