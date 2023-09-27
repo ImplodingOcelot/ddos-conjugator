@@ -80,16 +80,11 @@ public class Main {
                 }
             });
         } else if (root.equals("quote")) {
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        new windowgen(3);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+            SwingUtilities.invokeLater(() -> {
+                try {
+                    new windowgen(3); // Create an instance with the desired window choice (3 in this case)
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
                 }
             });
         } else if (root.equals("test")) {
@@ -129,7 +124,15 @@ public class Main {
         }
     }
 
-
+    public int reverseInt(int num) {
+        int reversed = 0;
+        while (num != 0) {
+            int digit = num % 10;
+            reversed = reversed * 10 + digit;
+            num /= 10;
+        }
+        return reversed;
+    }
 }
 
 class killMeIWantToDie {

@@ -87,21 +87,12 @@ public class windowgen {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(1000, 1000);
             displayButton = new JButton("New quote");
-            JPanel panel = new JPanel();
-            panel.setLayout(new GridLayout(3, 2, 10, 10));
             JLabel authorDisc = new JLabel();
             JLabel Quote = new JLabel();
             JLabel QuoteBy = new JLabel();
             JLabel title = new JLabel("Quote Generator");
             JLabel title2 = new JLabel("Author Description");
             imagegen catgirl = new imagegen();
-
-            //title.setPreferredSize(new Dimension(500, 100));
-            //QuoteBy.setPreferredSize(new Dimension(500, 100));
-            //authorDisc.setPreferredSize(new Dimension(500, 200));
-//            Quote.setPreferredSize(new Dimension(500, 600));
-//            title2.setPreferredSize(new Dimension(500, 200));
-
 
             inspirationAPI inspirationAPI = new inspirationAPI();
             inspirationAPI.inspirationAPImain();
@@ -113,22 +104,39 @@ public class windowgen {
 
             JLabel imageLabel = new JLabel(image);
 
-            imageLabel.setSize(new Dimension(500, 600));
-            title.setSize(new Dimension(500, 100));
-            QuoteBy.setSize(new Dimension(500, 100));
-            authorDisc.setSize(new Dimension(500, 200));
-            Quote.setSize(new Dimension(500, 600));
-            title2.setSize(new Dimension(500, 200));
 
-            panel.add(title);
-            panel.add(QuoteBy);
-            panel.add(imageLabel);
-            panel.add(Quote);
-            panel.add(title2);
-            panel.add(authorDisc);
-            frame.add(panel);
+            JPanel imageLabelPanel = new JPanel();
+            JPanel titleLabelPanel = new JPanel();
+            JPanel quoteByLabelPanel = new JPanel();
+            JPanel quoteLabelPanel = new JPanel();
+            JPanel title2LabelPanel = new JPanel();
+            JPanel authorDiscLabelPanel = new JPanel();
+
+            imageLabelPanel.setMinimumSize(new Dimension(500, 600));
+            titleLabelPanel.setMinimumSize(new Dimension(500, 100));
+            quoteByLabelPanel.setMinimumSize(new Dimension(500, 100));
+            authorDiscLabelPanel.setMinimumSize(new Dimension(500, 200));
+            quoteLabelPanel.setMinimumSize(new Dimension(500, 600));
+            title2LabelPanel.setMinimumSize(new Dimension(500, 200));
+
+            imageLabelPanel.add(imageLabel);
+            titleLabelPanel.add(title);
+            quoteByLabelPanel.add(QuoteBy);
+            quoteLabelPanel.add(Quote);
+            authorDiscLabelPanel.add(authorDisc);
+            title2LabelPanel.add(title2);
+
+            frame.add(imageLabelPanel, BorderLayout.CENTER);
+            frame.add(titleLabelPanel, BorderLayout.NORTH);
+            frame.add(quoteByLabelPanel, BorderLayout.SOUTH);
+            frame.add(quoteLabelPanel, BorderLayout.WEST);
+            frame.add(title2LabelPanel, BorderLayout.SOUTH);
+            frame.add(authorDiscLabelPanel, BorderLayout.SOUTH);
+
+            frame.setLocationRelativeTo(null);
+            //frame.pack();
             frame.setVisible(true);
         }
     }
-
 }
+/**/
