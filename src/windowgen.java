@@ -87,54 +87,76 @@ public class windowgen {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(1000, 1000);
             displayButton = new JButton("New quote");
-            JLabel authorDisc = new JLabel();
-            JLabel Quote = new JLabel();
-            JLabel QuoteBy = new JLabel();
-            JLabel title = new JLabel("Quote Generator");
-            JLabel title2 = new JLabel("Author Description");
+            JTextArea authorDisc = new JTextArea();
+            authorDisc.setEditable(false);
+            authorDisc.setWrapStyleWord(true);
+            authorDisc.setLineWrap(true);
+            authorDisc.setOpaque(false);
+            JTextArea Quote = new JTextArea();
+            Quote.setWrapStyleWord(true);
+            Quote.setEditable(false);
+            Quote.setOpaque(false);
+            Quote.setWrapStyleWord(true);
+            Quote.setLineWrap(true);
+            //JTextArea QuoteBy = new JTextArea();
+            //QuoteBy.setEditable(false);
+            //QuoteBy.setWrapStyleWord(true);
+            //QuoteBy.setLineWrap(true);
+            JTextArea title = new JTextArea("Quote Generator");
+            title.setEditable(false);
+            title.setWrapStyleWord(true);
+            title.setLineWrap(true);
+            title.setOpaque(false);
+            JTextArea title2 = new JTextArea("Author Description");
+            title2.setEditable(false);
+            title2.setLineWrap(true);
+            title2.setOpaque(false);
+            title.setWrapStyleWord(true);
+
             imagegen catgirl = new imagegen();
 
             inspirationAPI inspirationAPI = new inspirationAPI();
             inspirationAPI.inspirationAPImain();
             authorDisc.setText(inspirationAPI.getAuthorDisc());
-            QuoteBy.setText(inspirationAPI.getQuoteBy());
+            //QuoteBy.setText(inspirationAPI.getQuoteBy());
             Quote.setText(inspirationAPI.getQuote());
             catgirl.imagegenmain("Image of " + inspirationAPI.getQuoteBy());
             ImageIcon image = new ImageIcon("C:\\Users\\ottzj\\Documents\\image.jpg");
 
             JLabel imageLabel = new JLabel(image);
 
-
             JPanel imageLabelPanel = new JPanel();
             JPanel titleLabelPanel = new JPanel();
-            JPanel quoteByLabelPanel = new JPanel();
+            //JPanel quoteByLabelPanel = new JPanel();
             JPanel quoteLabelPanel = new JPanel();
             JPanel title2LabelPanel = new JPanel();
             JPanel authorDiscLabelPanel = new JPanel();
 
-            imageLabelPanel.setMinimumSize(new Dimension(500, 600));
-            titleLabelPanel.setMinimumSize(new Dimension(500, 100));
-            quoteByLabelPanel.setMinimumSize(new Dimension(500, 100));
-            authorDiscLabelPanel.setMinimumSize(new Dimension(500, 200));
-            quoteLabelPanel.setMinimumSize(new Dimension(500, 600));
-            title2LabelPanel.setMinimumSize(new Dimension(500, 200));
-
+            imageLabelPanel.setPreferredSize(new Dimension(500, 600));
+            titleLabelPanel.setPreferredSize(new Dimension(500, 100));
+            //quoteByLabelPanel.setPreferredSize(new Dimension(500, 100));
+            authorDiscLabelPanel.setPreferredSize(new Dimension(500, 200));
+            quoteLabelPanel.setPreferredSize(new Dimension(500, 600));
+            title2LabelPanel.setPreferredSize(new Dimension(500, 200));
+            imageLabel.setSize(500, 600);
+            title.setSize(100, 100);
+            Quote.setSize(500, 600);
+            authorDisc.setSize(1000, 200);
+            title2.setSize(500, 200);
             imageLabelPanel.add(imageLabel);
             titleLabelPanel.add(title);
-            quoteByLabelPanel.add(QuoteBy);
             quoteLabelPanel.add(Quote);
             authorDiscLabelPanel.add(authorDisc);
             title2LabelPanel.add(title2);
 
             frame.add(imageLabelPanel, BorderLayout.CENTER);
             frame.add(titleLabelPanel, BorderLayout.NORTH);
-            frame.add(quoteByLabelPanel, BorderLayout.SOUTH);
             frame.add(quoteLabelPanel, BorderLayout.WEST);
             frame.add(title2LabelPanel, BorderLayout.SOUTH);
             frame.add(authorDiscLabelPanel, BorderLayout.SOUTH);
 
             frame.setLocationRelativeTo(null);
-            //frame.pack();
+            frame.pack();
             frame.setVisible(true);
         }
     }

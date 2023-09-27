@@ -82,14 +82,13 @@ public class Main {
         } else if (root.equals("quote")) {
             SwingUtilities.invokeLater(() -> {
                 try {
-                    new windowgen(3); // Create an instance with the desired window choice (3 in this case)
+                    new windowgen(3);
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
             });
         } else if (root.equals("test")) {
-            imagegen bob = new imagegen();
-            bob.imagegenmain("Carl Sagan");
+            longestStreak("HHAACCCCHHH");
         }
     }
 
@@ -133,6 +132,38 @@ public class Main {
         }
         return reversed;
     }
+
+    public int loopy(long yas) {
+        int a = 0, b;
+        while (yas > 0) {
+            b = (int) yas % 10;
+            if (b % 2 == 1) {
+                a += b;
+            }
+            yas /= 10;
+        }
+        return a;
+    }
+
+    public static void longestStreak(String input) {
+        // find the longest streak of a letter in a string. for example, WAAAAAH has a max streak of 5 A's, and BOOOB has a max streak of 3 O's
+        int max = 0;
+        int count = 1;
+        char maxChar = input.charAt(0);
+        for (int i = 1; i < input.length(); i++) {
+            if (input.charAt(i) == input.charAt(i - 1)) {
+                count++;
+            } else {
+                if (count > max) {
+                    max = count;
+                    maxChar = input.charAt(i - 1);
+                }
+                count = 1;
+            }
+        }
+        // output the result, for example WAAAH would output "A: 3"
+        System.out.println(maxChar + ": " + max);
+    }
 }
 
 class killMeIWantToDie {
@@ -142,5 +173,14 @@ class killMeIWantToDie {
 
     public static void randint() {
         System.out.println(new Random().nextInt(1, 1000));
+    }
+
+    public double average(int a) {
+        double sum = 0;
+        while (a != 0) {
+            sum += a % 10;
+            a /= 10;
+        }
+        return sum;
     }
 }
