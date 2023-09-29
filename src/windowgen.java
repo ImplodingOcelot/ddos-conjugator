@@ -131,7 +131,7 @@ public class windowgen {
             JPanel quoteLabelPanel = new JPanel();
             JPanel title2LabelPanel = new JPanel();
             JPanel authorDiscLabelPanel = new JPanel();
-
+            JScrollPane scrPane = new JScrollPane(authorDisc);
             imageLabelPanel.setPreferredSize(new Dimension(500, 600));
             titleLabelPanel.setPreferredSize(new Dimension(500, 100));
             //quoteByLabelPanel.setPreferredSize(new Dimension(500, 100));
@@ -146,7 +146,7 @@ public class windowgen {
             imageLabelPanel.add(imageLabel);
             titleLabelPanel.add(title);
             quoteLabelPanel.add(Quote);
-            authorDiscLabelPanel.add(authorDisc);
+            authorDiscLabelPanel.add(scrPane);
             title2LabelPanel.add(title2);
 
             frame.add(imageLabelPanel, BorderLayout.CENTER);
