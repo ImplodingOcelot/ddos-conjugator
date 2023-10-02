@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class windowgen {
 
@@ -157,6 +158,28 @@ public class windowgen {
 
             frame.setLocationRelativeTo(null);
             frame.pack();
+            frame.setVisible(true);
+        } else if (windowchoice == 4) {
+            JFrame frame = new JFrame("Weather Forecaster");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(500, 500);
+            weatherFore forecast = new weatherFore();
+            ArrayList<String> alerts;
+            // alert format [state, alert, alert description, severity]
+            JTextField state = new JTextField();
+            state.setText("FL");
+            ArrayList<String> alertList = new ArrayList<>();
+            for (int i = 0; i < forecast.getCount(state.getText()); i++) {
+                alertList.add(i + ":" + forecast.getAlert(state.getText(), i).get(1));
+            }
+            System.out.println(alertList);
+            JButton displayButton = new JButton("Display");
+            JLabel resultLabel = new JLabel();
+            JComboBox alertChoice = new JComboBox<>((ComboBoxModel) alertList);
+
+            JPanel panel = new JPanel();
+
+            frame.setLocationRelativeTo(null);
             frame.setVisible(true);
         }
     }

@@ -88,8 +88,13 @@ public class Main {
                 }
             });
         } else if (root.equals("test")) {
-            weatherFore test = new weatherFore();
-            System.out.println(test.getAlert("GA", 1));
+            SwingUtilities.invokeLater(() -> {
+                try {
+                    new windowgen(4);
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 
