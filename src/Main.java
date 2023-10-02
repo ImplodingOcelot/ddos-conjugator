@@ -88,7 +88,8 @@ public class Main {
                 }
             });
         } else if (root.equals("test")) {
-            longestStreak("HHAACCCCHHH");
+            weatherFore test = new weatherFore();
+            System.out.println(test.getAlert("GA", 1));
         }
     }
 
