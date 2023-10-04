@@ -44,12 +44,19 @@ public class weatherFore {
     }
 
     private ArrayList<String> alertAreaDisc(String state) throws IOException, InterruptedException {
+        String testing;
         json = getFore(state).body();
         ArrayList<String> events = new ArrayList<>();
         JSONObject obj = new JSONObject(json);
         var features = obj.getJSONArray("features");
         for (int i = 0; i < features.length(); i++) {
             events.add(features.getJSONObject(i).getJSONObject("properties").getString("areaDesc").replace("\n", "").replace("\r", ""));
+        }
+        for (int i = 0; i < features.length(); i++) {
+            testing = events.get(i);
+            if (testing.contains(";")) {
+                events.set(i, testing.substring(0, testing.indexOf(";")) + ", and surrounding areas.");
+            }
         }
         return events;
     }

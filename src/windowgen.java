@@ -165,19 +165,26 @@ public class windowgen {
             frame.setSize(500, 500);
             weatherFore forecast = new weatherFore();
             ArrayList<String> alerts;
-            // alert format [state, alert, alert description, severity]
+            JComboBox alertChoice = new JComboBox<>();
+            // alert format [state, alert, alert description, alert area disc, severity]
             JTextField state = new JTextField();
-            state.setText("FL");
+            state.setText("CO");
             ArrayList<String> alertList = new ArrayList<>();
             for (int i = 0; i < forecast.getCount(state.getText()); i++) {
-                alertList.add(i + ":" + forecast.getAlert(state.getText(), i).get(1));
+                System.out.println(i + ": " + forecast.getAlert(state.getText(), i).get(1) + ", in: " + forecast.getAlert(state.getText(), i).get(3));
+                alertList.add(i + ": " + forecast.getAlert(state.getText(), i).get(1) + ", in: " + forecast.getAlert(state.getText(), i).get(3));
+                alertChoice.addItem(alertList.get(i));
             }
-            System.out.println(alertList);
             JButton displayButton = new JButton("Display");
-            JLabel resultLabel = new JLabel();
-            JComboBox alertChoice = new JComboBox<>((ComboBoxModel) alertList);
+            String choice = String.valueOf(alertChoice.getSelectedItem().toString().charAt(0));
+            int choiceA = Integer.parseInt(choice);
+            JPanel a = new JPanel();
+            a.add(forecast.getAlert(state.getText(), choiceA).get(1));
+            frame.add(state);
+            frame.add(displayButton);
+            frame.add(alertChoice);
+            frame.add(a);
 
-            JPanel panel = new JPanel();
 
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);

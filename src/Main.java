@@ -178,7 +178,7 @@ class killMeIWantToDie {
     }
 
     public static void randint() {
-        System.out.println(new Random().nextInt(1, 1000));
+        System.out.println(new Random().nextInt(1, 3));
     }
 
     public double average(int a) {
@@ -188,5 +188,47 @@ class killMeIWantToDie {
             a /= 10;
         }
         return sum;
+    }
+
+    public int getPlayer2Move(int round) {
+        int result;
+        if (round % 3 == 0) {
+            result = 3;
+        } else if (round % 2 == 0) {
+            result = 2;
+        } else {
+            result = 1;
+        }
+        return result;
+    }
+
+    public int getPlayer1Move() {
+        int result;
+        int round = new Random().nextInt(1, 3);
+        if (round % 3 == 0) {
+            result = 3;
+        } else if (round % 2 == 0) {
+            result = 2;
+        } else {
+            result = 1;
+        }
+        return result;
+    }
+
+    public void game(int maxRounds, int startingCoins) {
+        int p1Coins = startingCoins;
+        int p2Coins = startingCoins;
+        for (int i = 0; i <= maxRounds; i++) {
+            if (getPlayer1Move() == getPlayer2Move(i)) {
+                p1Coins -= getPlayer1Move();
+                p2Coins += 1;
+            } else if (getPlayer1Move() + getPlayer2Move(i) == 1 || getPlayer1Move() + getPlayer2Move(i) == -1) {
+                p1Coins -= getPlayer1Move();
+                p2Coins += 1;
+            } else {
+                p2Coins -= getPlayer2Move(i);
+                p1Coins += 1;
+            }
+        }
     }
 }
