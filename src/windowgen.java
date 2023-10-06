@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class windowgen {
 
@@ -170,22 +171,30 @@ public class windowgen {
             JTextField state = new JTextField();
             state.setText("CO");
             ArrayList<String> alertList = new ArrayList<>();
-            for (int i = 0; i < forecast.getCount(state.getText()); i++) {
-                System.out.println(i + ": " + forecast.getAlert(state.getText(), i).get(1) + ", in: " + forecast.getAlert(state.getText(), i).get(3));
-                alertList.add(i + ": " + forecast.getAlert(state.getText(), i).get(1) + ", in: " + forecast.getAlert(state.getText(), i).get(3));
-                alertChoice.addItem(alertList.get(i));
-            }
-            JButton displayButton = new JButton("Display");
-            String choice = String.valueOf(alertChoice.getSelectedItem().toString().charAt(0));
-            int choiceA = Integer.parseInt(choice);
-            JPanel a = new JPanel();
-            a.add(forecast.getAlert(state.getText(), choiceA).get(1));
-            frame.add(state);
-            frame.add(displayButton);
-            frame.add(alertChoice);
-            frame.add(a);
+            AtomicReference<String> forecasted = new AtomicReference<>("");
+            JButton displayButton = new JButton("Update");
+            displayButton.addActionListener(e -> {
+                for (int i = 0; i < forecast.getCount(state.getText()); i++) {
+                    alertChoice.removeAllItems();
+                    System.out.println(i + ": " + forecast.getAlert(state.getText(), i).get(1) + ", in: " + forecast.getAlert(state.getText(), i).get(3));
+                    alertList.add(i + ": " + forecast.getAlert(state.getText(), i).get(1) + ", in: " + forecast.getAlert(state.getText(), i).get(3));
+                    alertChoice.addItem(alertList.get(i));
+                }
+                String choice = String.valueOf(alertChoice.getSelectedItem().toString().charAt(0));
+                int choiceA = Integer.parseInt(choice);
+                forecasted.set(forecast.getAlert(state.getText(), choiceA).get(1));
+            });
+            JLabel a = new JLabel(forecasted.get());
+            JPanel panel = new JPanel();
 
 
+            panel.setLayout(new GridLayout(5, 1, 10, 10));
+            panel.add(state);
+            panel.add(displayButton);
+            panel.add(alertChoice);
+            panel.add(a);
+
+            frame.add(panel);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
         }
