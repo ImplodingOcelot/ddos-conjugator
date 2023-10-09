@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class windowgen {
 
@@ -169,30 +168,27 @@ public class windowgen {
             JComboBox alertChoice = new JComboBox<>();
             // alert format [state, alert, alert description, alert area disc, severity]
             JTextField state = new JTextField();
-            state.setText("CO");
             ArrayList<String> alertList = new ArrayList<>();
-            AtomicReference<String> forecasted = new AtomicReference<>("");
             JButton displayButton = new JButton("Update");
             displayButton.addActionListener(e -> {
+                alertList.clear();
                 for (int i = 0; i < forecast.getCount(state.getText()); i++) {
-                    alertChoice.removeAllItems();
                     System.out.println(i + ": " + forecast.getAlert(state.getText(), i).get(1) + ", in: " + forecast.getAlert(state.getText(), i).get(3));
                     alertList.add(i + ": " + forecast.getAlert(state.getText(), i).get(1) + ", in: " + forecast.getAlert(state.getText(), i).get(3));
                     alertChoice.addItem(alertList.get(i));
                 }
-                String choice = String.valueOf(alertChoice.getSelectedItem().toString().charAt(0));
-                int choiceA = Integer.parseInt(choice);
-                forecasted.set(forecast.getAlert(state.getText(), choiceA).get(1));
             });
-            JLabel a = new JLabel(forecasted.get());
             JPanel panel = new JPanel();
-
-
             panel.setLayout(new GridLayout(5, 1, 10, 10));
             panel.add(state);
             panel.add(displayButton);
             panel.add(alertChoice);
-            panel.add(a);
+            try {
+                JLabel disc = new JLabel();
+                disc.setText(forecast.getAlert(state.getText(), 0).get(0));
+                panel.add(disc);
+            } catch (Exception ignored) {
+            }
 
             frame.add(panel);
             frame.setLocationRelativeTo(null);

@@ -231,4 +231,9 @@ class killMeIWantToDie {
             }
         }
     }
+
+    // convert int (like 123) to binary sequence; use a method that returns a string
+    public String binaryConvert(int input) {
+        return Integer.toBinaryString(input);
+    }
 }

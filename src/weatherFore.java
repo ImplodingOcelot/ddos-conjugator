@@ -12,6 +12,7 @@ public class weatherFore {
     int count = 0;
 
     private HttpResponse<String> getFore(String state) {
+        System.out.println("HERE" + state);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.weather.gov/alerts/active?area=" + state))
                 .method("GET", HttpRequest.BodyPublishers.noBody())
@@ -30,7 +31,7 @@ public class weatherFore {
 
     private ArrayList<String> alertsUSA(String state) {
         if (json.equals("NOT SET")) {
-            getFore(state);
+            json = getFore(state).body();
         }
         ArrayList<String> events = new ArrayList<>();
         JSONObject obj = new JSONObject(json);
@@ -43,7 +44,7 @@ public class weatherFore {
 
     private ArrayList<String> alertsDiscUSA(String state) {
         if (json.equals("NOT SET")) {
-            getFore(state);
+            json = getFore(state).body();
         }
         ArrayList<String> events = new ArrayList<>();
         JSONObject obj = new JSONObject(json);
@@ -56,7 +57,7 @@ public class weatherFore {
 
     private ArrayList<String> alertAreaDisc(String state) {
         if (json.equals("NOT SET")) {
-            getFore(state);
+            json = getFore(state).body();
         }
         String testing;
         ArrayList<String> events = new ArrayList<>();
@@ -76,7 +77,7 @@ public class weatherFore {
 
     private ArrayList<String> alertServerity(String state) {
         if (json.equals("NOT SET")) {
-            getFore(state);
+            json = getFore(state).body();
         }
         ArrayList<String> events = new ArrayList<>();
         JSONObject obj = new JSONObject(json);
@@ -103,6 +104,7 @@ public class weatherFore {
 
     private ArrayList<ArrayList<String>> alertList(String state) {
         ArrayList<ArrayList<String>> out = new ArrayList<>();
+        System.out.println("WOW: " + state);
         for (int i = 0; i <= getCount(state); i++) {
             out.add(new ArrayList<>());
             out.get(i).add(state);
