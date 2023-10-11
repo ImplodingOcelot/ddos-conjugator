@@ -162,33 +162,40 @@ public class windowgen {
         } else if (windowchoice == 4) {
             JFrame frame = new JFrame("Weather Forecaster");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(500, 500);
+            frame.setSize(600, 700);
             weatherFore forecast = new weatherFore();
             ArrayList<String> alerts;
             JComboBox alertChoice = new JComboBox<>();
             // alert format [state, alert, alert description, alert area disc, severity]
             JTextField state = new JTextField();
+            JTextArea disc = new JTextArea();
+            disc.setEditable(false);
+            disc.setWrapStyleWord(true);
+            disc.setLineWrap(true);
+            disc.setOpaque(false);
             ArrayList<String> alertList = new ArrayList<>();
             JButton displayButton = new JButton("Update");
             displayButton.addActionListener(e -> {
                 alertList.clear();
+                alertChoice.removeAllItems();
                 for (int i = 0; i < forecast.getCount(state.getText()); i++) {
                     System.out.println(i + ": " + forecast.getAlert(state.getText(), i).get(1) + ", in: " + forecast.getAlert(state.getText(), i).get(3));
                     alertList.add(i + ": " + forecast.getAlert(state.getText(), i).get(1) + ", in: " + forecast.getAlert(state.getText(), i).get(3));
                     alertChoice.addItem(alertList.get(i));
                 }
+                disc.setText(forecast.getAlert(state.getText(), 0).get(2));
+                disc.setText(disc.getText().replace("...", ":").replace("*", "\n"));
+            });
+            alertChoice.addActionListener(e -> {
+                disc.setText(forecast.getAlert(state.getText(), alertChoice.getSelectedIndex()).get(2));
+                disc.setText(disc.getText().replace("...", ":").replace("*", "\n"));
             });
             JPanel panel = new JPanel();
-            panel.setLayout(new GridLayout(5, 1, 10, 10));
+            panel.setLayout(new GridLayout(4, 1, 10, 10));
             panel.add(state);
             panel.add(displayButton);
             panel.add(alertChoice);
-            try {
-                JLabel disc = new JLabel();
-                disc.setText(forecast.getAlert(state.getText(), 0).get(0));
-                panel.add(disc);
-            } catch (Exception ignored) {
-            }
+            panel.add(disc);
 
             frame.add(panel);
             frame.setLocationRelativeTo(null);

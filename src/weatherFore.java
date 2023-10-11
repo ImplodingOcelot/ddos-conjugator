@@ -12,7 +12,7 @@ public class weatherFore {
     int count = 0;
 
     private HttpResponse<String> getFore(String state) {
-        System.out.println("HERE" + state);
+//        System.out.println("HERE, GetFore" + state);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.weather.gov/alerts/active?area=" + state))
                 .method("GET", HttpRequest.BodyPublishers.noBody())
@@ -25,7 +25,7 @@ public class weatherFore {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-        json = "ERROR";
+        json = "NOT SET";
         return response;
     }
 
@@ -90,33 +90,40 @@ public class weatherFore {
 
     public int getCount(String state) {
         ArrayList<String> wow;
+//        System.out.println("HERE, getCount" + state);
         wow = alertsUSA(state);
-        count = wow.size();
+        int count = wow.size();
         return count;
     }
 
     public ArrayList<String> getAlert(String state, int select) {
-        ArrayList<String> out = new ArrayList<>();
+        ArrayList<String> out1 = new ArrayList<>();
         ArrayList<ArrayList<String>> out2 = alertList(state);
-        out = out2.get(select);
-        return out;
+        if (select < 0) {
+            select = 0;
+        }
+        out1 = out2.get(select);
+//        System.out.println("here69 out2: " + out2);
+        return out1;
     }
 
     private ArrayList<ArrayList<String>> alertList(String state) {
         ArrayList<ArrayList<String>> out = new ArrayList<>();
-        System.out.println("WOW: " + state);
         for (int i = 0; i <= getCount(state); i++) {
             out.add(new ArrayList<>());
             out.get(i).add(state);
             try {
-                out.get(i).add(unescapeJava(alertsUSA(state).get(i)));
-                out.get(i).add(unescapeJava(alertsDiscUSA(state).get(i)));
-                out.get(i).add(unescapeJava(alertAreaDisc(state).get(i)));
-                out.get(i).add(unescapeJava(alertServerity(state).get(i)));
+//                System.out.println("here2233: " + state + "; " + alertsUSA(state).get(i));
+                out.get(i).add(unescapeJava(alertsUSA(state).get(i)).replace("\\n", "").replace("\\r", ""));
+                out.get(i).add(unescapeJava(alertsDiscUSA(state).get(i)).replace("\\n", "").replace("\\r", ""));
+                out.get(i).add(unescapeJava(alertAreaDisc(state).get(i)).replace("\\n", "").replace("\\r", ""));
+                out.get(i).add(unescapeJava(alertServerity(state).get(i)).replace("\\n", "").replace("\\r", ""));
             } catch (IndexOutOfBoundsException e) {
                 out.get(i).add("No alerts");
             }
         }
+//        System.out.println("here232323: " + state);
+        json = "NOT SET";
         return out;
     }
 
@@ -138,9 +145,5 @@ public class weatherFore {
         processed += escaped;
 
         return processed;
-    }
-
-    public static void updateFore() {
-        System.out.println("Updating...");
     }
 }
