@@ -19,42 +19,46 @@ public class Main {
         boolean kill_switch = false;
         System.out.println("Enter program selection: ");
         root = reader.next();
-        if (root.equals("ddos")) {
-            String ipAddress;
-            System.out.println("What IP would you like to ping?");
-            ipAddress = reader.next();
-            for (int i = 0; i < 100; i++) {
-                System.out.println("Sending Ping Request to " + ipAddress + "; Loop number: " + i);
-                sendPingRequest(ipAddress, i);
+        switch (root) {
+            case "ddos" -> {
+                String ipAddress;
+                System.out.println("What IP would you like to ping?");
+                ipAddress = reader.next();
+                for (int i = 0; i < 100; i++) {
+                    System.out.println("Sending Ping Request to " + ipAddress + "; Loop number: " + i);
+                    sendPingRequest(ipAddress, i);
+                }
             }
-        } else if (root.equals("calc")) {
-            calculatorio();
-        } else if (root.equals("randint1000")) {
-            killMeIWantToDie.randint();
-            killMeIWantToDie.randint();
-            killMeIWantToDie.randint();
-        } else if (root.equals("max3")) {
-            int a, b, c;
-            System.out.println("Type in the 3 numbers you want to find the max of:");
-            a = reader.nextInt();
-            b = reader.nextInt();
-            c = reader.nextInt();
-            System.out.println("The max number is: " + fuck.FUCKMEAHHHHHHHHHHHHHHHHHHHHHHH(a, b, c));
-        } else if (root.equals("pone")) {
-            System.out.println("What phone number would you like added up? Use the format XXX-XXX-XXXX");
-            String bob = reader.next();
-            System.out.println("The result is: " + (int) (Integer.parseInt(bob.substring(0, 3)) + Integer.parseInt(bob.substring(4, 7)) + Integer.parseInt(bob.substring(8, 12))));
-        } else if (root.equals("piglatin")) {
-            System.out.println("What word would you like to translate?");
-            String bob = reader.next();
-            //System.out.println("Your result is: " + bob.substring(bob.length() - 1) + bob.substring(1, bob.length() - 1) + bob.substring(0, 1));
-            if (bob.substring(0, 1).equals(bob.substring(bob.length() - 1))) {
-                System.out.println("They are the same");
-            } else {
-                System.out.println("They are not the same");
+            case "calc" -> calculatorio();
+            case "randint1000" -> {
+                killMeIWantToDie.randint();
+                killMeIWantToDie.randint();
+                killMeIWantToDie.randint();
             }
-        } else if (root.equals("conj")) {
-            SwingUtilities.invokeLater(new Runnable() {
+            case "max3" -> {
+                int a, b, c;
+                System.out.println("Type in the 3 numbers you want to find the max of:");
+                a = reader.nextInt();
+                b = reader.nextInt();
+                c = reader.nextInt();
+                System.out.println("The max number is: " + fuck.FUCKMEAHHHHHHHHHHHHHHHHHHHHHHH(a, b, c));
+            }
+            case "pone" -> {
+                System.out.println("What phone number would you like added up? Use the format XXX-XXX-XXXX");
+                String bob = reader.next();
+                System.out.println("The result is: " + (int) (Integer.parseInt(bob.substring(0, 3)) + Integer.parseInt(bob.substring(4, 7)) + Integer.parseInt(bob.substring(8, 12))));
+            }
+            case "piglatin" -> {
+                System.out.println("What word would you like to translate?");
+                String bob = reader.next();
+                //System.out.println("Your result is: " + bob.substring(bob.length() - 1) + bob.substring(1, bob.length() - 1) + bob.substring(0, 1));
+                if (bob.substring(0, 1).equals(bob.substring(bob.length() - 1))) {
+                    System.out.println("They are the same");
+                } else {
+                    System.out.println("They are not the same");
+                }
+            }
+            case "conj" -> SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
                     try {
@@ -66,8 +70,7 @@ public class Main {
                     }
                 }
             });
-        } else if (root.equals("madlib")) {
-            SwingUtilities.invokeLater(new Runnable() {
+            case "madlib" -> SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
                     try {
@@ -79,16 +82,14 @@ public class Main {
                     }
                 }
             });
-        } else if (root.equals("quote")) {
-            SwingUtilities.invokeLater(() -> {
+            case "quote" -> SwingUtilities.invokeLater(() -> {
                 try {
                     new windowgen(3);
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
             });
-        } else if (root.equals("test")) {
-            SwingUtilities.invokeLater(() -> {
+            case "test" -> SwingUtilities.invokeLater(() -> {
                 try {
                     new windowgen(4);
                 } catch (IOException | InterruptedException e) {

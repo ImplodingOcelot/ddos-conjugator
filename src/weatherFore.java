@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class weatherFore {
     String json = "NOT SET";
     int count = 0;
-
+    ArrayList<ArrayList<String>> out2 = null;
     private HttpResponse<String> getFore(String state) {
         System.out.println("PINGING API.NWS");
         HttpRequest request = HttpRequest.newBuilder()
@@ -98,7 +98,12 @@ public class weatherFore {
     public ArrayList<String> getAlert(String state, int select) {
         ArrayList<String> out1 = new ArrayList<>();
         System.out.println("MAKING NEW ALERT");
-        ArrayList<ArrayList<String>> out2 = alertList(state);
+        try {
+            if (out2.get(0).get(0).equals(state)) {
+                return out2.get(select);
+            }
+        } catch (NullPointerException ignore){}
+        out2 = alertList(state);
         if (select < 0) {
             select = 0;
         }
