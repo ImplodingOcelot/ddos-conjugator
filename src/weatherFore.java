@@ -9,8 +9,7 @@ import java.util.ArrayList;
 
 public class weatherFore {
     String json = "NOT SET";
-    int count = 0;
-    ArrayList<ArrayList<String>> out2 = null;
+    String lastState = "NONE";
     private HttpResponse<String> getFore(String state) {
         System.out.println("PINGING API.NWS");
         HttpRequest request = HttpRequest.newBuilder()
@@ -95,37 +94,22 @@ public class weatherFore {
         return count;
     }
 
-    public ArrayList<String> getAlert(String state, int select) {
-        ArrayList<String> out1 = new ArrayList<>();
-        System.out.println("MAKING NEW ALERT");
-        try {
-            if (out2.get(0).get(0).equals(state)) {
-                return out2.get(select);
-            }
-        } catch (NullPointerException ignore){}
-        out2 = alertList(state);
-        if (select < 0) {
-            select = 0;
+    public ArrayList<ArrayList<String>> alertList(String state) {
+        if(!lastState.equals(state))   {
+            json = "NOT SET";
         }
-        out1 = out2.get(select);
-//        System.out.println("here69 out2: " + out2);
-        json = "NOT SET";
-        return out1;
-    }
-
-    private ArrayList<ArrayList<String>> alertList(String state) {
+        lastState = state;
         ArrayList<ArrayList<String>> out = new ArrayList<>();
-        for (int i = 0; i <= getCount(state); i++) {
-            out.add(new ArrayList<>());
-            out.get(i).add(state);
+        for (int i = 0; i < getCount(state); i++) {
             try {
-//                System.out.println("here2233: " + state + "; " + alertsUSA(state).get(i));
+                out.add(new ArrayList<>());
+                out.get(i).add(state);
                 out.get(i).add(unescapeJava(alertsUSA(state).get(i)).replace("\\n", "").replace("\\r", ""));
                 out.get(i).add(unescapeJava(alertsDiscUSA(state).get(i)).replace("\\n", "").replace("\\r", ""));
                 out.get(i).add(unescapeJava(alertAreaDisc(state).get(i)).replace("\\n", "").replace("\\r", ""));
                 out.get(i).add(unescapeJava(alertServerity(state).get(i)).replace("\\n", "").replace("\\r", ""));
-            } catch (IndexOutOfBoundsException e) {
-                out.get(i).add("No alerts");
+            } catch (IndexOutOfBoundsException ignored) {
+
             }
         }
 //        System.out.println("here232323: " + state);

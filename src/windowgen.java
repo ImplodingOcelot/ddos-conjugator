@@ -164,7 +164,6 @@ public class windowgen {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(600, 700);
             weatherFore forecast = new weatherFore();
-            ArrayList<String> alerts;
             JComboBox alertChoice = new JComboBox<>();
             // alert format [state, alert, alert description, alert area disc, severity]
             JTextField state = new JTextField();
@@ -175,21 +174,26 @@ public class windowgen {
             disc.setOpaque(false);
             ArrayList<String> alertList = new ArrayList<>();
             JButton displayButton = new JButton("Update");
+            final ArrayList<ArrayList<String>>[] apiCall = new ArrayList[]{null};
             displayButton.addActionListener(e -> {
                 alertList.clear();
                 alertChoice.removeAllItems();
-                ArrayList<String> apiCall = null;
                 for (int i = 0; i < forecast.getCount(state.getText()); i++) {
-                    apiCall = forecast.getAlert(state.getText(), i);
-                    System.out.println(i + ": " + apiCall.get(1) + ", in: " + apiCall.get(3));
-                    alertList.add(i + ": " + apiCall.get(1) + ", in: " + apiCall.get(3));
+                    apiCall[0] = forecast.alertList(state.getText());
+                    System.out.println(i + ": " + apiCall[0].get(i).get(1) + ", in: " + apiCall[0].get(i).get(3));
+                    alertList.add(i + ": " + apiCall[0].get(i).get(1) + ", in: " + apiCall[0].get(i).get(3));
                     alertChoice.addItem(alertList.get(i));
                 }
-                disc.setText(apiCall.get(2));
+                disc.setText(apiCall[0].get(0).get(2));
                 disc.setText(disc.getText().replace("...", ":").replace("*", "\n"));
             });
             alertChoice.addActionListener(e -> {
-                disc.setText(forecast.getAlert(state.getText(), alertChoice.getSelectedIndex()).get(2));
+                // set disc to second index of the index of the arraylist chosen by AlertChoice
+                int wowza = alertChoice.getSelectedIndex();
+                if(wowza < 0)   {
+                    wowza = 0;
+                }
+                disc.setText(apiCall[0].get(wowza).get(2));
                 disc.setText(disc.getText().replace("...", ":").replace("*", "\n"));
             });
             JPanel panel = new JPanel();
