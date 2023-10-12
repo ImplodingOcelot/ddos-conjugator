@@ -178,12 +178,14 @@ public class windowgen {
             displayButton.addActionListener(e -> {
                 alertList.clear();
                 alertChoice.removeAllItems();
+                ArrayList<String> apiCall = null;
                 for (int i = 0; i < forecast.getCount(state.getText()); i++) {
-                    System.out.println(i + ": " + forecast.getAlert(state.getText(), i).get(1) + ", in: " + forecast.getAlert(state.getText(), i).get(3));
-                    alertList.add(i + ": " + forecast.getAlert(state.getText(), i).get(1) + ", in: " + forecast.getAlert(state.getText(), i).get(3));
+                    apiCall = forecast.getAlert(state.getText(), i);
+                    System.out.println(i + ": " + apiCall.get(1) + ", in: " + apiCall.get(3));
+                    alertList.add(i + ": " + apiCall.get(1) + ", in: " + apiCall.get(3));
                     alertChoice.addItem(alertList.get(i));
                 }
-                disc.setText(forecast.getAlert(state.getText(), 0).get(2));
+                disc.setText(apiCall.get(2));
                 disc.setText(disc.getText().replace("...", ":").replace("*", "\n"));
             });
             alertChoice.addActionListener(e -> {

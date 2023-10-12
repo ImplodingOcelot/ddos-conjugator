@@ -12,7 +12,7 @@ public class weatherFore {
     int count = 0;
 
     private HttpResponse<String> getFore(String state) {
-//        System.out.println("HERE, GetFore" + state);
+        System.out.println("PINGING API.NWS");
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.weather.gov/alerts/active?area=" + state))
                 .method("GET", HttpRequest.BodyPublishers.noBody())
@@ -25,7 +25,6 @@ public class weatherFore {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-        json = "NOT SET";
         return response;
     }
 
@@ -98,12 +97,14 @@ public class weatherFore {
 
     public ArrayList<String> getAlert(String state, int select) {
         ArrayList<String> out1 = new ArrayList<>();
+        System.out.println("MAKING NEW ALERT");
         ArrayList<ArrayList<String>> out2 = alertList(state);
         if (select < 0) {
             select = 0;
         }
         out1 = out2.get(select);
 //        System.out.println("here69 out2: " + out2);
+        json = "NOT SET";
         return out1;
     }
 
@@ -123,7 +124,6 @@ public class weatherFore {
             }
         }
 //        System.out.println("here232323: " + state);
-        json = "NOT SET";
         return out;
     }
 
