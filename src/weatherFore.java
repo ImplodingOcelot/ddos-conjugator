@@ -88,6 +88,10 @@ public class weatherFore {
 
     public int getCount(String state) {
         ArrayList<String> wow;
+        if(!lastState.equals(state))   {
+            json = "NOT SET";
+        }
+        lastState = state;
 //        System.out.println("HERE, getCount" + state);
         wow = alertsUSA(state);
         int count = wow.size();

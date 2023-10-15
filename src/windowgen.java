@@ -184,8 +184,10 @@ public class windowgen {
                     alertList.add(i + ": " + apiCall[0].get(i).get(1) + ", in: " + apiCall[0].get(i).get(3));
                     alertChoice.addItem(alertList.get(i));
                 }
-                disc.setText(apiCall[0].get(0).get(2));
-                disc.setText(disc.getText().replace("...", ":").replace("*", "\n"));
+                try {
+                    disc.setText(apiCall[0].get(0).get(2));
+                    disc.setText(disc.getText().replace("...", ":").replace("*", "\n"));
+                } catch (NullPointerException ignored) {}
             });
             alertChoice.addActionListener(e -> {
                 // set disc to second index of the index of the arraylist chosen by AlertChoice
