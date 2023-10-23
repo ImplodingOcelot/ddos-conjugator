@@ -15,8 +15,6 @@ public class Main {
         Scanner reader = new Scanner(System.in);
         killMeIWantToDie fuck = new killMeIWantToDie();
         String root;
-        int area;
-        boolean kill_switch = false;
         System.out.println("Enter program selection: ");
         root = reader.next();
         switch (root) {

@@ -2,8 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class windowgen {
 
@@ -122,7 +125,10 @@ public class windowgen {
             //QuoteBy.setText(inspirationAPI.getQuoteBy());
             Quote.setText(inspirationAPI.getQuote());
             catgirl.imagegenmain("Image of " + inspirationAPI.getQuoteBy());
-            ImageIcon image = new ImageIcon("C:\\Users\\ottzj\\Documents\\image.jpg");
+            String userHome = System.getProperty("user.home");
+            String documentsPath = userHome + File.separator + "Documents";
+            File file = new File(documentsPath, "image.jpg");
+            ImageIcon image = new ImageIcon(file.getPath());
 
             JLabel imageLabel = new JLabel(image);
 
@@ -176,10 +182,23 @@ public class windowgen {
             JButton displayButton = new JButton("Update");
             final ArrayList<ArrayList<String>>[] apiCall = new ArrayList[]{null};
             displayButton.addActionListener(e -> {
+                String stateCorrected = state.getText();
+                if(stateCorrected.length() != 2)    {
+                    try {
+                        stateCorrected = stateCorrected.toLowerCase();
+                        stateCorrected = capitalizeString(stateCorrected);
+                        stateCorrected = STATE_MAP.get(stateCorrected);
+                    } catch (NullPointerException ignored) {
+                        System.out.println("State not found");
+                        stateCorrected = "CO";
+                    }
+                } else {
+                    stateCorrected = stateCorrected.toUpperCase();
+                }
                 alertList.clear();
                 alertChoice.removeAllItems();
-                for (int i = 0; i < forecast.getCount(state.getText()); i++) {
-                    apiCall[0] = forecast.alertList(state.getText());
+                for (int i = 0; i < forecast.getCount(stateCorrected); i++) {
+                    apiCall[0] = forecast.alertList(stateCorrected);
                     System.out.println(i + ": " + apiCall[0].get(i).get(1) + ", in: " + apiCall[0].get(i).get(3));
                     alertList.add(i + ": " + apiCall[0].get(i).get(1) + ", in: " + apiCall[0].get(i).get(3));
                     alertChoice.addItem(alertList.get(i));
@@ -187,16 +206,23 @@ public class windowgen {
                 try {
                     disc.setText(apiCall[0].get(0).get(2));
                     disc.setText(disc.getText().replace("...", ":").replace("*", "\n"));
-                } catch (NullPointerException ignored) {}
+                } catch (NullPointerException ignored) {
+                    disc.setText("No alerts in this state");
+                }
             });
             alertChoice.addActionListener(e -> {
                 // set disc to second index of the index of the arraylist chosen by AlertChoice
                 int wowza = alertChoice.getSelectedIndex();
-                if(wowza < 0)   {
+                if (wowza < 0) {
                     wowza = 0;
                 }
-                disc.setText(apiCall[0].get(wowza).get(2));
-                disc.setText(disc.getText().replace("...", ":").replace("*", "\n"));
+                if(disc.getText().equals("No alerts in this state"))   {
+                    disc.setText("");
+                }
+                else {
+                    disc.setText(apiCall[0].get(wowza).get(2));
+                    disc.setText(disc.getText().replace("...", ":").replace("*", "\n"));
+                }
             });
             JPanel panel = new JPanel();
             panel.setLayout(new GridLayout(4, 1, 10, 10));
@@ -209,6 +235,76 @@ public class windowgen {
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
         }
+    }
+    public static final Map<String, String> STATE_MAP = new HashMap<>();
+    static {
+        STATE_MAP.put("Alabama","AL");
+        STATE_MAP.put("Alaska","AK");
+        STATE_MAP.put("Arizona","AZ");
+        STATE_MAP.put("Arkansas","AR");
+        STATE_MAP.put("California","CA");
+        STATE_MAP.put("Colorado","CO");
+        STATE_MAP.put("Connecticut","CT");
+        STATE_MAP.put("Delaware","DE");
+        STATE_MAP.put("District Of Columbia","DC");
+        STATE_MAP.put("Florida","FL");
+        STATE_MAP.put("Georgia","GA");
+        STATE_MAP.put("Hawaii","HI");
+        STATE_MAP.put("Idaho","ID");
+        STATE_MAP.put("Illinois","IL");
+        STATE_MAP.put("Indiana","IN");
+        STATE_MAP.put("Iowa","IA");
+        STATE_MAP.put("Kansas","KS");
+        STATE_MAP.put("Kentucky","KY");
+        STATE_MAP.put("Louisiana","LA");
+        STATE_MAP.put("Maine","ME");
+        STATE_MAP.put("Maryland","MD");
+        STATE_MAP.put("Massachusetts","MA");
+        STATE_MAP.put("Michigan","MI");
+        STATE_MAP.put("Minnesota","MN");
+        STATE_MAP.put("Mississippi","MS");
+        STATE_MAP.put("Missouri","MO");
+        STATE_MAP.put("Montana","MT");
+        STATE_MAP.put("Nebraska","NE");
+        STATE_MAP.put("Nevada","NV");
+        STATE_MAP.put("New Hampshire","NH");
+        STATE_MAP.put("New Jersey","NJ");
+        STATE_MAP.put("New Mexico","NM");
+        STATE_MAP.put("New York","NY");
+        STATE_MAP.put("North Carolina","NC");
+        STATE_MAP.put("North Dakota","ND");
+        STATE_MAP.put("Ohio","OH");
+        STATE_MAP.put("Oklahoma","OK");
+        STATE_MAP.put("Oregon","OR");
+        STATE_MAP.put("Pennsylvania","PA");
+        STATE_MAP.put("Rhode Island","RI");
+        STATE_MAP.put("South Carolina","SC");
+        STATE_MAP.put("South Dakota","SD");
+        STATE_MAP.put("Tennessee","TN");
+        STATE_MAP.put("Texas","TX");
+        STATE_MAP.put("Utah","UT");
+        STATE_MAP.put("Vermont","VT");
+        STATE_MAP.put("Virginia","VA");
+        STATE_MAP.put("Washington","WA");
+        STATE_MAP.put("West Virginia","WV");
+        STATE_MAP.put("Wisconsin","WI");
+        STATE_MAP.put("Wyoming","WY");
+        STATE_MAP.put("Guam", "GU");
+        STATE_MAP.put("Puerto Rico","PR");
+        STATE_MAP.put("Virgin Islands","VI");
+    }
+    public static String capitalizeString(String string) {
+        char[] chars = string.toLowerCase().toCharArray();
+        boolean found = false;
+        for (int i = 0; i < chars.length; i++) {
+            if (!found && Character.isLetter(chars[i])) {
+                chars[i] = Character.toUpperCase(chars[i]);
+                found = true;
+            } else if (Character.isWhitespace(chars[i]) || chars[i]=='.' || chars[i]=='\'') { // You can add other chars here
+                found = false;
+            }
+        }
+        return String.valueOf(chars);
     }
 }
 /**/

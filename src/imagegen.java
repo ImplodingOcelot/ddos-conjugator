@@ -54,7 +54,12 @@ public class imagegen {
         BufferedImage image = ImageIO.read(new ByteArrayInputStream(response.body()));
 
         // write to file
-        ImageIO.write(image, "jpg", new File("C:\\Users\\ottzj\\Documents\\image.jpg"));
+        String userHome = System.getProperty("user.home");
+        String documentsPath = userHome + File.separator + "Documents";
+        File directory = new File(documentsPath);
+        File file = new File(directory, "image.jpg");
+
+        ImageIO.write(image, "jpg", file);
 
         return response.body().toString();
     }
