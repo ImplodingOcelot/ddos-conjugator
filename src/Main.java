@@ -1,8 +1,8 @@
 import jdk.jshell.JShell;
-
 import javax.script.ScriptException;
 import javax.swing.*;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
@@ -87,13 +87,17 @@ public class Main {
                     e.printStackTrace();
                 }
             });
-            case "test" -> SwingUtilities.invokeLater(() -> {
+            case "weather" -> SwingUtilities.invokeLater(() -> {
                 try {
                     new windowgen(4);
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
             });
+            case "NASA" -> {
+                NasaImageDownloader nasa = new NasaImageDownloader();
+                System.out.println(nasa.getIOTDdata());
+            }
         }
     }
 
