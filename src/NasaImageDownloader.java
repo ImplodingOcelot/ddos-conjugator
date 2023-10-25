@@ -6,7 +6,14 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class NasaImageDownloader {
-    public HttpResponse<String> getIOTDdata() {
+    public String getNASAdata(String requested) {
+        String output = "NOT SET";
+        if(requested.equals("saveIOTD")) {
+            output = getIOTDdata().body();
+        }
+        return output;
+    }
+    private HttpResponse<String> getIOTDdata() {
         String url = null;
         System.out.println("PINGING NASA IOTD");
         HttpRequest request = HttpRequest.newBuilder()
@@ -36,7 +43,7 @@ public class NasaImageDownloader {
         }
         return response;
     }
-    public static void saveImage(String imageUrl, String destinationFile) throws IOException {
+    private static void saveImage(String imageUrl, String destinationFile) throws IOException {
         URL url = new URL(imageUrl);
         InputStream is = url.openStream();
         OutputStream os = new FileOutputStream(destinationFile);

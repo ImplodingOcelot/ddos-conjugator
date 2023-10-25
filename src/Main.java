@@ -96,7 +96,7 @@ public class Main {
             });
             case "NASA" -> {
                 NasaImageDownloader nasa = new NasaImageDownloader();
-                System.out.println(nasa.getIOTDdata());
+                System.out.println(nasa.getNASAdata("saveIOTD"));
             }
         }
     }
